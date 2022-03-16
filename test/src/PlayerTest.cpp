@@ -19,7 +19,22 @@
 #include "gtest/gtest.h"
 #include "PlanetPlayer.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libavutil/parseutils.h>
+
+#ifdef __cplusplus
+}
+#endif
+
 TEST(PlanetTest,playertest){
     int i  = 5;
     EXPECT_EQ(i,5);
+    planet::PlanetPlayer planetPlayer;
+    planetPlayer.test();
+    auto packet = av_packet_alloc();
 }
