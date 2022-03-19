@@ -14,10 +14,12 @@ else ()
     message(FATAL_ERROR "not support current platform")
 endif ()
 
+# 链接 ffmpeg 库的目录
 function(link_ffmpeg_directory path)
     link_directories(${path}/lib/ffmpeg/${platform}/${arch}/lib)
 endfunction()
 
+# 链接 ffmpeg 中对应的静态库
 function(link_ffmpeg_library target path)
     target_link_libraries(${target} avcodec avdevice avfilter avformat avutil postproc swresample swscale)
 endfunction()
