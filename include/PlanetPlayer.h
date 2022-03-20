@@ -20,8 +20,6 @@
 #pragma once
 #include <iostream>
 
-#include <Test1.h>
-#include <Test2.h>
 
 namespace planet {
 

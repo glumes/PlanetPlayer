@@ -19,7 +19,6 @@
 #pragma once
 
 #include "PlanetPlayer.h"
-#include "Test1.h"
 namespace planet {
 
     class Demo {

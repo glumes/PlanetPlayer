@@ -6,3 +6,4 @@ build/
 
 demo/.idea/
 demo/cmake-build-debug/
+resource/out/

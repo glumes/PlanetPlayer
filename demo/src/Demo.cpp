@@ -22,6 +22,5 @@ void planet::Demo::callPlayer() {
     PlanetPlayer planetPlayer;
     planetPlayer.test();
 
-    Test1 test1;
 //    std::cout << test1.getName();
 }

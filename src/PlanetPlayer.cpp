@@ -19,8 +19,5 @@
 #include "PlanetPlayer.h"
 
 void planet::PlanetPlayer::test() {
-    Test1 t1;
-    std::cout << t1.getName() <<  std::endl;
-    Test2 t2;
-    std::cout << t2.getName() << std::endl;
+
 }
