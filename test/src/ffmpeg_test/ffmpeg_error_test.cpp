@@ -26,6 +26,8 @@ extern "C" {
 #include <libavutil/parseutils.h>
 #include <libavcodec/avcodec.h>
 #include <libswscale/swscale.h>
+#include <libavutil/error.h>
+
 #ifdef __cplusplus
 }
 #endif
@@ -42,5 +44,16 @@ namespace planet {
         // 获取日志打印级别
         int level = av_log_get_level();
         av_log(nullptr, AV_LOG_INFO, "log level is %d\n", level);
+
+        GLUMES_LOG_INFO("ffmepg again is {}",AVERROR(EAGAIN));
+
+        char buf[1024];
+        av_make_error_string(buf,1024,AVERROR_EXTERNAL);
+        GLUMES_LOG_INFO("ffmpeg log info is {}",buf);
+
+        char errstr[1024];
+        av_strerror(AVERROR_DEMUXER_NOT_FOUND, errstr, 1024);
+        GLUMES_LOG_INFO("ffmpeg log info is {}",errstr);
+
     }
 }

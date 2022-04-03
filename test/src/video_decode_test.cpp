@@ -88,6 +88,7 @@ namespace planet {
 
 
     TEST(PlanetTest, scale_H264_test) {
+        av_log_set_level(AV_LOG_INFO);
         av_log_set_callback(log_callback);
 
         const AVCodec *decodeCodec;
