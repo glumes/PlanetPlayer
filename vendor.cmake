@@ -17,3 +17,6 @@ target_link_libraries(${target}
         )
 endfunction()
 
+function(link_spdlog_library target)
+target_link_libraries(${target} spdlog)
+endfunction()

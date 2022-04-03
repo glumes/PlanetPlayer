@@ -18,13 +18,16 @@
  */
 #include "gtest/gtest.h"
 #include "utils/PlanetEnvironment.h"
+#include "utils/Log.h"
 
-int main(int argc, char** argv) {
-    testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
+int main(int argc, char **argv) {
+    testing::TestEventListeners &listeners = testing::UnitTest::GetInstance()->listeners();
     listeners.Append(new testing::EmptyTestEventListener());
 
     AddGlobalTestEnvironment(new planet::PlanetEnvironment());
-    testing::InitGoogleTest(&argc,argv);
+    testing::InitGoogleTest(&argc, argv);
+
+    planet::Log::init();
 
     return RUN_ALL_TESTS();
 }

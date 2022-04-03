@@ -16,10 +16,24 @@
  *
  * 欢迎联系交流！！！
  */
-#include "PlanetPlayer.h"
+#include "Log.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
 
 namespace planet {
-    void PlanetPlayer::test() {
+    std::shared_ptr<spdlog::logger> Log::mCoreLogger;
 
+    void Log::init() {
+        std::vector<spdlog::sink_ptr> logSinks;
+        logSinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+        logSinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("PlanetPlayer.txt", true));
+
+        logSinks[0]->set_pattern("%^[%T] %n: %v%$");
+        logSinks[1]->set_pattern("[%T] [%l] %n: %v");
+
+        mCoreLogger = std::make_shared<spdlog::logger>("PlanetPlayer", begin(logSinks), end(logSinks));
+        spdlog::register_logger(mCoreLogger);
+        mCoreLogger->set_level(spdlog::level::trace);
+        mCoreLogger->flush_on(spdlog::level::trace);
     }
 }

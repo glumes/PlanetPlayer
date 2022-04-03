@@ -16,10 +16,31 @@
  *
  * 欢迎联系交流！！！
  */
-#include "PlanetPlayer.h"
+#include "gtest/gtest.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libavutil/parseutils.h>
+#include <libavcodec/avcodec.h>
+#include <libswscale/swscale.h>
+#ifdef __cplusplus
+}
+#endif
+
+#include "utils/Log.h"
 
 namespace planet {
-    void PlanetPlayer::test() {
-
+    TEST(PlanetTest, ffmpeg_error_test) {
+        GLUMES_LOG_INFO("test log and arg is {} and str is {}",1,"string");
+        // 通过 av_log 打印日志
+        av_log(nullptr, AV_LOG_INFO, "this is info log\n");
+        // 设置日志打印级别
+        av_log_set_level(AV_LOG_INFO);
+        // 获取日志打印级别
+        int level = av_log_get_level();
+        av_log(nullptr, AV_LOG_INFO, "log level is %d\n", level);
     }
 }

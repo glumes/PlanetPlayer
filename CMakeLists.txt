@@ -9,8 +9,9 @@ set(PLANET_INCLUDES ./ include src)
 include(${CMAKE_CURRENT_SOURCE_DIR}/config.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/vendor.cmake)
 
-# 添加 FFmpeg 库的依赖
+# 添加三方库头文件的依赖
 list(APPEND PLANET_INCLUDES ${ffmpeg_dir}/include)
+list(APPEND PLANET_INCLUDES ${spdlog_dir}/include)
 link_ffmpeg_directory()
 
 # SDK 的源文件
@@ -28,6 +29,7 @@ target_link_libraries(PlanetPlayer gtest)
 
 # 链接 ffmpeg
 link_ffmpeg_library(PlanetPlayer)
+link_spdlog_library(PlanetPlayer)
 
 ##########################################################
 
@@ -35,6 +37,7 @@ add_subdirectory(./3rdparty/googletest)
 
 file(GLOB_RECURSE PLANET_TEST_FILES
         test/src/*.*
+        test/src/ffmpeg_test/*.*
         test/src/utils/*.*)
 
 set(PLANET_TEST_INCLUDES 3rdparty/googletest/googletest 3rdparty/googletest/googletest/include
