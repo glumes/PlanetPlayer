@@ -16,7 +16,7 @@ link_ffmpeg_directory()
 
 # SDK 的源文件
 file(GLOB_RECURSE PLANET_FILES
-        src/*.*)
+        src/*.* mp4parser/src/*.*)
 
 # 编译 SDK 的静态库
 add_library(PlanetPlayer STATIC ${PLANET_FILES})
