@@ -18,11 +18,30 @@
  */
 #pragma once
 
+#include <iostream>
 namespace planet {
 
-    class BoxReader {
+class BoxReader {
+ public:
+  BoxReader();
+  ~BoxReader();
 
-    };
+  int open(const std::string& path);
+  int close();
 
-}
+  long getLength();
+  long getPos();
+  int setPos(long pos);
+  uint8_t read8();
+  uint16_t read16();
+  uint32_t read24();
+  uint32_t read32();
+  uint64_t read64();
+  int skip(int len);
+  int readBuffer(char* buffer,int len);
 
+ private:
+  FILE* file;
+};
+
+}  // namespace planet

@@ -38,6 +38,7 @@ add_subdirectory(./3rdparty/googletest)
 file(GLOB_RECURSE PLANET_TEST_FILES
         test/src/*.*
         test/src/ffmpeg_test/*.*
+        test/src/mp4parser/src/*.*
         test/src/utils/*.*)
 
 set(PLANET_TEST_INCLUDES 3rdparty/googletest/googletest 3rdparty/googletest/googletest/include

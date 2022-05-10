@@ -28,13 +28,14 @@
 
 namespace planet {
 
-    class Log {
-    public:
-        static void init();
-        static std::shared_ptr<spdlog::logger> &getCoreLogger(){return mCoreLogger;}
+class Log {
+ public:
+  static void init();
+  static std::shared_ptr<spdlog::logger>& getCoreLogger() {
+    return mCoreLogger;
+  }
 
-    private:
-        static std::shared_ptr<spdlog::logger> mCoreLogger;
-    };
-}
-
+ private:
+  static std::shared_ptr<spdlog::logger> mCoreLogger;
+};
+}  // namespace planet
