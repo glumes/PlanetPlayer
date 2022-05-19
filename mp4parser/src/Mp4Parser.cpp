@@ -17,9 +17,12 @@
  * 欢迎联系交流！！！
  */
 #include "Mp4Parser.h"
+#include "box/Box.h"
+#include "BoxReader.h"
+
 namespace planet {
 
-Mp4Parser::Mp4Parser(const std::shared_ptr<BoxReader> reader) {
+Mp4Parser::Mp4Parser(std::shared_ptr<BoxReader> reader) {
   this->boxReader = reader;
 }
 
@@ -40,14 +43,30 @@ int Mp4Parser::parse(const std::string& path) {
   boxReader->setPos(0);
   while (currentSize < fileSize){
     auto box = readBox(currentSize);
-//    currentSize += box->size();
+    currentSize += box->size;
+    boxes.push_back(box);
     boxReader->setPos(currentSize);
   }
   return 0;
 }
 
-std::shared_ptr<Box> Mp4Parser::readBox(long) {
-  return std::shared_ptr<Box>();
+std::shared_ptr<Box> Mp4Parser::readBox(long startPos) {
+  int index = 0;
+  uint32_t size = boxReader->read32();
+  uint32_t type = boxReader->read32();
+  index = 8;
+  if (size == 1){
+    index += 8;
+    size = boxReader->read64();
+  }
+  auto box = allocBox(type,size);
+  box->startPos = startPos;
+  box->parse(this,startPos);
+  return box;
+}
+
+std::shared_ptr<Box> Mp4Parser::allocBox(uint32_t type,uint32_t size) {
+  return std::make_shared<Box>();
 }
 
 }  // namespace planet

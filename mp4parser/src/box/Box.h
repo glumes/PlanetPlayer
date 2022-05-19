@@ -20,19 +20,32 @@
 
 #include "BoxReader.h"
 #include "FourCC.h"
+#include "Mp4Parser.h"
+
 namespace planet {
 
-#define DECLARE_BOX_METHODS(T)                                                        \
-  T();                                                                                \
-  virtual ~T();                                                                       \
-  virtual bool parse(const std::shared_ptr<BoxReader>& reader) override;              \
-  virtual FourCC BoxType() const override;                                            \
+#define DECLARE_BOX_METHODS(T)                                             \
+  T();                                                                     \
+  virtual ~T();                                                            \
+  virtual bool parse(const Mp4Parser* parser, uint32_t startPos) override; \
+  virtual FourCC BoxType() const override;
 
 class Box {
  public:
-  virtual ~Box();
-  virtual bool parse(const std::shared_ptr<BoxReader>& reader) = 0;
-  virtual FourCC BoxType() const = 0;
+  virtual ~Box(){};
+  virtual bool parse(const Mp4Parser*, uint32_t) {
+    return false;
+  };
+  virtual FourCC BoxType() const {
+    return FourCC::FOURCC_ftyp;
+  };
+
+ protected:
+  uint32_t size;
+  uint32_t type;
+  uint32_t startPos;
+
+  friend class Mp4Parser;
 };
 
 }  // namespace planet

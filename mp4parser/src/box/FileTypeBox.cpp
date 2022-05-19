@@ -20,15 +20,17 @@
 
 namespace planet {
 
-FileTypeBox::FileTypeBox() {}
+FileTypeBox::FileTypeBox() {
+}
 
-FileTypeBox::~FileTypeBox(){}
+FileTypeBox::~FileTypeBox() {
+}
 
 FourCC FileTypeBox::BoxType() const {
-  return FourCC::FOURCC_ftyp2;
+  return FourCC::FOURCC_ftyp;
 }
 
-bool FileTypeBox::parse(const std::shared_ptr<BoxReader>& reader) {
-
+bool FileTypeBox::parse(const Mp4Parser* parser, uint32_t startPos) {
+  return false;
 }
-}
+}  // namespace planet
