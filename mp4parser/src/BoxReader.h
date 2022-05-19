@@ -19,6 +19,8 @@
 #pragma once
 
 #include <iostream>
+#include "base/Define.h"
+
 namespace planet {
 
 class BoxReader {

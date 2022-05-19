@@ -18,9 +18,15 @@
  */
 #pragma once
 
+#include "box/Box.h"
+
 namespace planet {
 
-#define RET_OK 0
-#define RET_FAIL -1
-
-}
+class FileTypeBox : public Box {
+ public:
+  DECLARE_BOX_METHODS(FileTypeBox)
+ private:
+  FourCC major_brand;
+  uint32_t minor_version;
+};
+}  // namespace planet

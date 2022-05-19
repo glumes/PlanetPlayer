@@ -12,11 +12,15 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/vendor.cmake)
 # 添加三方库头文件的依赖
 list(APPEND PLANET_INCLUDES ${ffmpeg_dir}/include)
 list(APPEND PLANET_INCLUDES ${spdlog_dir}/include)
+
+list(APPEND PLANET_INCLUDES mp4parser/src)
+list(APPEND PLANET_INCLUDES mp4parser/src/box)
+
 link_ffmpeg_directory()
 
 # SDK 的源文件
 file(GLOB_RECURSE PLANET_FILES
-        src/*.* mp4parser/src/*.*)
+        src/*.* mp4parser/src/*.* mp4parser/src/box/*.*)
 
 # 编译 SDK 的静态库
 add_library(PlanetPlayer STATIC ${PLANET_FILES})
@@ -38,7 +42,7 @@ add_subdirectory(./3rdparty/googletest)
 file(GLOB_RECURSE PLANET_TEST_FILES
         test/src/*.*
         test/src/ffmpeg_test/*.*
-        test/src/mp4parser/src/*.*
+        test/src/mp4parser/*.*
         test/src/utils/*.*)
 
 set(PLANET_TEST_INCLUDES 3rdparty/googletest/googletest 3rdparty/googletest/googletest/include

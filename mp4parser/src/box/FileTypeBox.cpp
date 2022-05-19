@@ -16,4 +16,19 @@
  *
  * 欢迎联系交流！！！
  */
-#include "Box.h"
+#include "box/FileTypeBox.h"
+
+namespace planet {
+
+FileTypeBox::FileTypeBox() {}
+
+FileTypeBox::~FileTypeBox(){}
+
+FourCC FileTypeBox::BoxType() const {
+  return FourCC::FOURCC_ftyp2;
+}
+
+bool FileTypeBox::parse(const std::shared_ptr<BoxReader>& reader) {
+
+}
+}

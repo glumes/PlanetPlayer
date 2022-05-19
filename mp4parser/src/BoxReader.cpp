@@ -17,7 +17,6 @@
  * 欢迎联系交流！！！
  */
 #include "BoxReader.h"
-#include "base/Define.h"
 
 namespace planet {
 BoxReader::BoxReader() {

@@ -17,12 +17,23 @@
  * 欢迎联系交流！！！
  */
 #pragma once
+#include <memory>
+#include "box/Box.h"
+#include "BoxReader.h"
 
 namespace planet {
 
-    class Mp4Parser {
+class Mp4Parser {
+ public:
+  explicit Mp4Parser(const std::shared_ptr<BoxReader> reader);
+  ~Mp4Parser();
+  int parse(const std::string& path);
+  std::shared_ptr<Box> readBox(long position);
 
-    };
+ private:
+  void init();
+  std::shared_ptr<Box> box = nullptr;
+  std::shared_ptr<BoxReader> boxReader = nullptr;
+};
 
-}
-
+}  // namespace planet

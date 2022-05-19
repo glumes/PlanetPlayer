@@ -23,6 +23,12 @@ namespace planet {
 
 #define MKTAG(a,b,c,d) ((d) | ((c) << 8) | ((b) << 16) | ((unsigned)(a) << 24))
 
+
+enum class FourCC{
+  FOURCC_ftyp2,
+
+};
+
 #define FOURCC_ftyp MKTAG('f','t','y','p')
 #define FOURCC_moov MKTAG('m','o','o','v')
 #define FOURCC_mvhd MKTAG('m','v','h','d')

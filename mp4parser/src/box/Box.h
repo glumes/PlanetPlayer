@@ -18,13 +18,21 @@
  */
 #pragma once
 
+#include "BoxReader.h"
+#include "FourCC.h"
 namespace planet {
 
-    class Box {
-    public:
-        virtual ~Box();
+#define DECLARE_BOX_METHODS(T)                                                        \
+  T();                                                                                \
+  virtual ~T();                                                                       \
+  virtual bool parse(const std::shared_ptr<BoxReader>& reader) override;              \
+  virtual FourCC BoxType() const override;                                            \
 
-    };
+class Box {
+ public:
+  virtual ~Box();
+  virtual bool parse(const std::shared_ptr<BoxReader>& reader) = 0;
+  virtual FourCC BoxType() const = 0;
+};
 
-}
-
+}  // namespace planet
