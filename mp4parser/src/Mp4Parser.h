@@ -31,6 +31,7 @@ class Mp4Parser {
   ~Mp4Parser();
   int parse(const std::string& path);
   std::shared_ptr<Box> readBox(long position);
+  const std::shared_ptr<BoxReader> getReader() const;
 
  private:
   void init() {};

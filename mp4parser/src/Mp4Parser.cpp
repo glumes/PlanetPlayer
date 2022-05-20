@@ -69,4 +69,8 @@ std::shared_ptr<Box> Mp4Parser::allocBox(uint32_t type,uint32_t size) {
   return std::make_shared<Box>();
 }
 
+const std::shared_ptr<BoxReader> Mp4Parser::getReader() const {
+  return boxReader;
+}
+
 }  // namespace planet

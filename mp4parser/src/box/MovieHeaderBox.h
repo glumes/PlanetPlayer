@@ -18,34 +18,14 @@
  */
 #pragma once
 
-#include "BoxReader.h"
-#include "FourCC.h"
-#include "Mp4Parser.h"
+#include "box/Box.h"
 
 namespace planet {
 
-#define DECLARE_BOX_METHODS(T)                                             \
-  T();                                                                     \
-  virtual ~T();                                                            \
-  virtual int parse(const Mp4Parser* parser, uint32_t startPos) override; \
-  virtual FourCC BoxType() const override;
-
-class Box {
+class MovieHeaderBox : public Box {
  public:
-  virtual ~Box(){};
-  virtual int parse(const Mp4Parser*, uint32_t) {
-    return false;
-  };
-  virtual FourCC BoxType() const {
-    return FourCC::FOURCC_ftyp;
-  };
-
- protected:
-  uint32_t size;
-  uint32_t type;
-  uint32_t startPos;
-
-  friend class Mp4Parser;
+  DECLARE_BOX_METHODS(MovieHeaderBox)
+ private:
 };
 
 }  // namespace planet

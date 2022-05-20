@@ -16,21 +16,38 @@
  *
  * 欢迎联系交流！！！
  */
-#include "box/FileTypeBox.h"
+#include "box/MovieHeaderBox.h"
 
-namespace planet {
-
-FileTypeBox::FileTypeBox() {
+namespace planet{
+MovieHeaderBox::MovieHeaderBox() {
 }
 
-FileTypeBox::~FileTypeBox() {
+MovieHeaderBox::~MovieHeaderBox() {
 }
 
-FourCC FileTypeBox::BoxType() const {
-  return FourCC::FOURCC_ftyp;
+FourCC MovieHeaderBox::BoxType() const {
+  return FourCC::FOURCC_mvhd;
 }
 
-int FileTypeBox::parse(const Mp4Parser* parser, uint32_t startPos) {
-  return false;
+int MovieHeaderBox::parse(const Mp4Parser* parser, uint32_t startPos) {
+  auto reader = parser->getReader();
+  reader->setPos(startPos);
+  uint64_t creationTime,modificationTime;
+  uint32_t timeScale,duration;
+  uint8_t version = reader->read8();
+  // read flag
+  reader->read24();
+  if (version == 1){
+    creationTime = reader->read64();
+    modificationTime = reader->read64();
+    timeScale = reader->read32();
+    duration = reader->read32();
+  }else{
+    creationTime = reader->read32();
+    modificationTime = reader->read32();
+    timeScale = reader->read32();
+    duration = reader->read32();
+  }
+  return RET_OK;
 }
-}  // namespace planet
+}
