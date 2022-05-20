@@ -18,8 +18,14 @@
  */
 #pragma once
 
+#include "box/Box.h"
+
 namespace planet {
 
-class MetaDataBox {};
+class MetaDataBox : public Box {
+ public:
+  DECLARE_BOX_METHODS(MetaDataBox)
+ private:
+};
 
 }  // namespace glumes
