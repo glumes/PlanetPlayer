@@ -16,9 +16,16 @@
  *
  * 欢迎联系交流！！！
  */
+#pragma once
 
-#include "box/MetaDataBox.h"
+#include "box/Box.h"
 
 namespace planet {
 
-}
+class TrackBox : public Box {
+ public:
+  DECLARE_BOX_METHODS(TrackBox)
+ private:
+};
+
+}  // namespace planet

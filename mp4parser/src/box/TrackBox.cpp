@@ -16,9 +16,4 @@
  *
  * 欢迎联系交流！！！
  */
-
-#include "box/MetaDataBox.h"
-
-namespace planet {
-
-}
+#include "TrackBox.h"

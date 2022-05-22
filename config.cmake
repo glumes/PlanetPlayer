@@ -5,7 +5,11 @@ set(project_dir /Users/jelin/OpenSourceCode/PlanetPlayer)
 set(3rdparty_dir /Users/jelin/OpenSourceCode/PlanetPlayer/3rdparty)
 
 # 设置 mac 上 ffmpeg 的安装路径
-set(ffmpeg_dir /usr/local/Cellar/ffmpeg/5.0.1)
+if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "x86_64")
+    set(ffmpeg_dir /usr/local/Cellar/ffmpeg/5.0.1)
+elseif (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "arm64")
+    set(ffmpeg_dir /opt/homebrew/Cellar/ffmpeg/5.0.1)
+endif ()
 
 add_definitions(-DPROJECT_DIR_PATH="${project_dir}")
 
