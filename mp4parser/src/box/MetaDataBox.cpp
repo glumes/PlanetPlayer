@@ -20,5 +20,12 @@
 #include "box/MetaDataBox.h"
 
 namespace planet {
-
+MetaDataBox::MetaDataBox(FourCC type, uint32_t size) : Box(type, size) {
 }
+MetaDataBox::~MetaDataBox() {
+}
+
+int MetaDataBox::parse(Mp4Parser* parser, uint32_t startPos) {
+  return RET_OK;
+}
+}  // namespace planet

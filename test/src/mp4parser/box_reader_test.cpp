@@ -20,6 +20,7 @@
 #include "gtest/gtest.h"
 #include "mp4parser/src/BoxReader.h"
 #include "mp4parser/src/FourCC.h"
+#include "mp4parser/src/Mp4Parser.h"
 
 #include "base/Define.h"
 #include "utils/Log.h"
@@ -34,13 +35,22 @@ TEST(box_reader_test, test_read_ftyp) {
   }
 
   long length = reader->getLength();
-  GLUMES_LOG_INFO("file length is {}",length);
+  GLUMES_LOG_INFO("file length is {}", length);
 
-  uint32_t ftyp = reader->read32();
-//  if (ftyp != FourCC::FOURCC_ftyp){
-//    GLUMES_LOG_INFO("read ftyp success and value is {}",ftyp);
-//  }else{
-//    GLUMES_LOG_INFO("read ftyp failed and value is {}",ftyp);
-//  }
+  FourCC ftyp = reader->read32();
+  if (ftyp != FOURCC_ftyp) {
+    GLUMES_LOG_INFO("read ftyp success and value is {}", ftyp);
+  } else {
+    GLUMES_LOG_INFO("read ftyp failed and value is {}", ftyp);
+  }
 }
+
+TEST(box_reader_test, mp4_parser_test) {
+  std::string path = std::string(PROJECT_DIR_PATH) + "/resource/video/video-640x360.mp4";
+  auto reader = std::make_shared<BoxReader>();
+
+  auto mp4Parser = std::make_shared<Mp4Parser>(reader);
+  auto ret = mp4Parser->parse(path);
 }
+
+}  // namespace planet

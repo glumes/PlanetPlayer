@@ -20,17 +20,17 @@
 
 namespace planet {
 
-FileTypeBox::FileTypeBox() {
+FileTypeBox::FileTypeBox(FourCC type, uint32_t size) : Box(type, size) {
 }
 
 FileTypeBox::~FileTypeBox() {
 }
 
-FourCC FileTypeBox::BoxType() const {
-  return FourCC::FOURCC_ftyp;
-}
+// FourCC FileTypeBox::BoxType() const {
+//   return FOURCC_ftyp;
+// }
 
-int FileTypeBox::parse(const Mp4Parser* parser, uint32_t startPos) {
+int FileTypeBox::parse(Mp4Parser* parser, uint32_t startPos) {
   return false;
 }
 }  // namespace planet

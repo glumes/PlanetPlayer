@@ -21,30 +21,45 @@
 #include "BoxReader.h"
 #include "FourCC.h"
 #include "Mp4Parser.h"
+#include "utils/Log.h"
 
 namespace planet {
 
-#define DECLARE_BOX_METHODS(T)                                             \
-  T();                                                                     \
-  virtual ~T();                                                            \
-  virtual int parse(const Mp4Parser* parser, uint32_t startPos) override; \
-  virtual FourCC BoxType() const override;
+#define DECLARE_BOX_METHODS(T)                                      \
+  T(FourCC type, uint32_t size);                                    \
+  virtual ~T();                                                     \
+  virtual int parse(Mp4Parser* parser, uint32_t startPos) override; \
+  //  virtual FourCC BoxType() const override;
 
 class Box {
  public:
+  Box(FourCC type, uint32_t size) {
+    this->type = type;
+    this->size = size;
+    this->startPos = 0;
+  };
   virtual ~Box(){};
-  virtual int parse(const Mp4Parser*, uint32_t) {
-    return false;
+  virtual int parse(Mp4Parser*, uint32_t) {
+    return RET_FAIL;
   };
   virtual FourCC BoxType() const {
-    return FourCC::FOURCC_ftyp;
+    return type;
   };
+  uint32_t getSize() const {
+    return size;
+  }
+  uint32_t getStartPos() const {
+    return startPos;
+  }
+  void setStartPos(uint32_t startPos) {
+    this->startPos = startPos;
+  }
 
  protected:
   uint32_t size;
-  uint32_t type;
+  FourCC type;
   uint32_t startPos;
-
+  std::vector<std::shared_ptr<Box>> children = {};
   friend class Mp4Parser;
 };
 

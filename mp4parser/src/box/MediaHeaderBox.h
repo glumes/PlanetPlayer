@@ -16,17 +16,14 @@
  *
  * 欢迎联系交流！！！
  */
+#pragma once
+#include "box/Box.h"
 
-#include "box/TrackBox.h"
 namespace planet {
-TrackBox::TrackBox(FourCC type, uint32_t size) : Box(type, size) {
-}
+class MediaHeaderBox : public Box {
+ public:
+  DECLARE_BOX_METHODS(MediaHeaderBox);
 
-TrackBox::~TrackBox() {
-}
-
-int TrackBox::parse(Mp4Parser* parser, uint32_t startPos) {
-  return RET_OK;
-}
-
+ private:
+};
 }  // namespace planet

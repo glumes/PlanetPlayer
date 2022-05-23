@@ -19,35 +19,33 @@
 #include "box/MovieHeaderBox.h"
 
 namespace planet{
-MovieHeaderBox::MovieHeaderBox() {
+MovieHeaderBox::MovieHeaderBox(FourCC type, uint32_t size) : Box(type, size) {
 }
 
 MovieHeaderBox::~MovieHeaderBox() {
 }
 
-FourCC MovieHeaderBox::BoxType() const {
-  return FourCC::FOURCC_mvhd;
-}
-
-int MovieHeaderBox::parse(const Mp4Parser* parser, uint32_t startPos) {
+int MovieHeaderBox::parse(Mp4Parser* parser, uint32_t startPos) {
   auto reader = parser->getReader();
   reader->setPos(startPos);
-  uint64_t creationTime,modificationTime;
-  uint32_t timeScale,duration;
+  uint64_t creationTime, modificationTime;
+  uint32_t timeScale, duration;
   uint8_t version = reader->read8();
   // read flag
   reader->read24();
-  if (version == 1){
+  if (version == 1) {
     creationTime = reader->read64();
     modificationTime = reader->read64();
     timeScale = reader->read32();
     duration = reader->read32();
-  }else{
+  } else {
     creationTime = reader->read32();
     modificationTime = reader->read32();
     timeScale = reader->read32();
     duration = reader->read32();
   }
+  parser->duration = duration;
+  parser->timescale = timeScale;
   return RET_OK;
 }
 }

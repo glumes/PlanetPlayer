@@ -17,8 +17,13 @@
  * 欢迎联系交流！！！
  */
 #include "Mp4Parser.h"
-#include "box/Box.h"
 #include "BoxReader.h"
+#include "box/Box.h"
+#include "box/ContainerBox.h"
+#include "box/FileTypeBox.h"
+#include "box/MetaDataBox.h"
+#include "box/MovieHeaderBox.h"
+#include "box/TrackBox.h"
 
 namespace planet {
 
@@ -27,50 +32,75 @@ Mp4Parser::Mp4Parser(std::shared_ptr<BoxReader> reader) {
 }
 
 Mp4Parser::~Mp4Parser() {
-
 }
 
 int Mp4Parser::parse(const std::string& path) {
-  if (boxReader == nullptr){
+  if (boxReader == nullptr) {
     return RET_FAIL;
   }
   int ret = boxReader->open(path);
-  if (ret != RET_OK){
+  if (ret != RET_OK) {
     return RET_FAIL;
   }
   long fileSize = boxReader->getLength();
   long currentSize = 0;
   boxReader->setPos(0);
-  while (currentSize < fileSize){
+  while (currentSize < fileSize) {
     auto box = readBox(currentSize);
-    currentSize += box->size;
+    currentSize += box->getSize();
     boxes.push_back(box);
+    GLUMES_LOG_INFO("boxes push back size is {} and boxes size is {}", box->size, boxes.size());
     boxReader->setPos(currentSize);
   }
   return 0;
 }
 
-std::shared_ptr<Box> Mp4Parser::readBox(long startPos) {
+std::shared_ptr<Box> Mp4Parser::readBox(long startPos) const {
   int index = 0;
   uint32_t size = boxReader->read32();
   uint32_t type = boxReader->read32();
   index = 8;
-  if (size == 1){
+  if (size == 1) {
     index += 8;
     size = boxReader->read64();
   }
-  auto box = allocBox(type,size);
-  box->startPos = startPos;
-  box->parse(this,startPos);
+  GLUMES_LOG_INFO("mp4 parser read box and size is {}", size);
+  auto box = allocBox(type, size);
+  box->setStartPos(startPos);
+  box->parse(const_cast<Mp4Parser*>(this), startPos);
   return box;
 }
 
-std::shared_ptr<Box> Mp4Parser::allocBox(uint32_t type,uint32_t size) {
-  return std::make_shared<Box>();
-}
-
-const std::shared_ptr<BoxReader> Mp4Parser::getReader() const {
+std::shared_ptr<BoxReader> Mp4Parser::getReader() const {
   return boxReader;
 }
 
+std::shared_ptr<Box> Mp4Parser::allocBox(FourCC type, uint32_t size) const {
+  std::shared_ptr<Box> box = nullptr;
+  switch (type) {
+    case FOURCC_moov:
+      box = std::make_shared<ContainerBox>(type, size);
+      break;
+    case FOURCC_ftyp:
+      box = std::make_shared<FileTypeBox>(type, size);
+      break;
+    case FOURCC_mvhd:
+      box = std::make_shared<MovieHeaderBox>(type, size);
+      break;
+    case FOURCC_meta:
+      box = std::make_shared<MetaDataBox>(type, size);
+      break;
+    case FOURCC_trak:
+      box = std::make_shared<TrackBox>(type, size);
+      break;
+    default:
+      box = std::make_shared<Box>(type, size);
+      break;
+  }
+  return box;
+}
+
+// int Mp4Parser::addBox(const std::shared_ptr<Box> box) const {
+//   return 0;
+// }
 }  // namespace planet

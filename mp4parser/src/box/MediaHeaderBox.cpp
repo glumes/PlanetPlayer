@@ -16,17 +16,19 @@
  *
  * 欢迎联系交流！！！
  */
+//
+// Created on 2022/5/23.
+//
 
-#include "box/TrackBox.h"
+#include "box/MediaHeaderBox.h"
+
 namespace planet {
-TrackBox::TrackBox(FourCC type, uint32_t size) : Box(type, size) {
-}
 
-TrackBox::~TrackBox() {
+MediaHeaderBox::MediaHeaderBox(FourCC type, uint32_t size) : Box(type, size) {
 }
+MediaHeaderBox::~MediaHeaderBox() noexcept = default;
 
-int TrackBox::parse(Mp4Parser* parser, uint32_t startPos) {
+int MediaHeaderBox::parse(Mp4Parser* parser, uint32_t startPos) {
   return RET_OK;
 }
-
 }  // namespace planet
