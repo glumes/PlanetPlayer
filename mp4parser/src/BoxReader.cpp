@@ -79,9 +79,9 @@ uint32_t BoxReader::read24() {
 }
 
 uint32_t BoxReader::read32() {
-  uint8_t buffer[4];
+  uint8_t buffer[4] = {0};
   fread(buffer, 4, 1, file);
-  return ((buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3]);
+  return (buffer[0] << 24) | (buffer[1] << 16) | (buffer[2] << 8) | buffer[3];
 }
 
 uint64_t BoxReader::read64() {

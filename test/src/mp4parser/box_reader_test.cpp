@@ -37,8 +37,12 @@ TEST(box_reader_test, test_read_ftyp) {
   long length = reader->getLength();
   GLUMES_LOG_INFO("file length is {}", length);
 
+  reader->setPos(0);
+  auto size = reader->read32();
+  GLUMES_LOG_INFO("read size is {}", size);
+
   FourCC ftyp = reader->read32();
-  if (ftyp != FOURCC_ftyp) {
+  if (ftyp == FOURCC_ftyp) {
     GLUMES_LOG_INFO("read ftyp success and value is {}", ftyp);
   } else {
     GLUMES_LOG_INFO("read ftyp failed and value is {}", ftyp);
