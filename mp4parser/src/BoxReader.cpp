@@ -46,8 +46,9 @@ int BoxReader::close() {
 long BoxReader::getLength() {
   long cur = ftell(file);
   fseek(file,0,SEEK_END);
-  long length = ftell(file);
+  long length = ftello(file);
   fseek(file,cur,SEEK_SET);
+
   return length;
 }
 
@@ -56,7 +57,7 @@ long BoxReader::getPos() {
 }
 
 int BoxReader::setPos(long pos) {
-  fseek(file,pos,SEEK_END);
+  fseek(file, pos, SEEK_SET);
   return RET_OK;
 }
 

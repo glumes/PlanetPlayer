@@ -43,6 +43,19 @@ int Mp4Parser::parse(const std::string& path) {
     return RET_FAIL;
   }
   long fileSize = boxReader->getLength();
+
+  if (fileSize <= 8) {
+    return RET_FAIL;
+  }
+  boxReader->read32();
+  uint32_t ftyp = boxReader->read32();
+  if (ftyp != FOURCC_ftyp) {
+    GLUMES_LOG_INFO("type is not ftyp");
+    return RET_FAIL;
+  } else {
+    GLUMES_LOG_INFO("type is ftyp");
+  }
+
   long currentSize = 0;
   boxReader->setPos(0);
   while (currentSize < fileSize) {
