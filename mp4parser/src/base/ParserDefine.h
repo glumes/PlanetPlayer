@@ -17,12 +17,33 @@
  * 欢迎联系交流！！！
  */
 #pragma once
+#include <string>
+#include "base/Define.h"
 
 namespace planet {
 
-typedef int RET;
+typedef unsigned int BOX_UI32;
+typedef signed int BOX_SI32;
+typedef unsigned short BOX_UI16;
+typedef signed short BOX_SI16;
+typedef unsigned char BOX_UI08;
 
-#define RET_OK 0
-#define RET_FAIL -1
+typedef BOX_UI08 BOX_Byte;
+typedef BOX_UI32 BOX_Size;
 
+typedef long long BOX_SI64;
+typedef unsigned long long BOX_UI64;
+typedef unsigned long long BOX_LargeSize;
+typedef long long BOX_Offset;
+typedef unsigned long long BOX_Position;
+
+#define BOX_fseek fseeko
+#define Box_ftell ftello
+
+#define BOX_FAILED(result) ((result) != RET_OK)
+#define BOX_SUCCEEDED(result) ((result) == RET_OK)
+
+#define BOX_ERROR_INTERNAL -2
+#define BOX_ERROR_EOS -3
+#define BOX_ERROR_READ_FAILED -4
 }  // namespace planet

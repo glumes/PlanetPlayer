@@ -16,9 +16,6 @@
  *
  * 欢迎联系交流！！！
  */
-//
-// Created on 2022/5/27.
-//
 
 #include "Mp4Movie.h"
 

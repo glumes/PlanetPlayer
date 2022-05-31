@@ -19,7 +19,7 @@
 #pragma once
 
 #include <iostream>
-#include "base/Define.h"
+#include "base/ParserDefine.h"
 
 namespace planet {
 

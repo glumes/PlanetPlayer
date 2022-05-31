@@ -16,13 +16,7 @@
  *
  * 欢迎联系交流！！！
  */
-#pragma once
 
-namespace planet {
+#include "BoxUtils.h"
 
-typedef int RET;
-
-#define RET_OK 0
-#define RET_FAIL -1
-
-}  // namespace planet
+namespace planet {}
