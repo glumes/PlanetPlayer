@@ -16,23 +16,27 @@
  *
  * 欢迎联系交流！！！
  */
-#pragma once
-#include <iostream>
-#include "reader/ByteStreamReader.h"
+
+#include "gtest/gtest.h"
+#include "mp4parser/src/BoxReader.h"
+#include "mp4parser/src/FourCC.h"
+#include "mp4parser/src/Mp4Parser.h"
+
+#include "base/Define.h"
+#include "reader/FileByteStreamReader.h"
+#include "utils/Log.h"
 
 namespace planet {
-class FileByteStreamReader : public ByteStreamReader {
- public:
-  static RET Create(std::shared_ptr<ByteStreamReader>& reader, const std::string& path);
-  explicit FileByteStreamReader(FILE* file, BOX_LargeSize size);
-  virtual RET readPartial(void* buffer, BOX_Size bytesToRead, BOX_Size& bytesRead) override;
-  virtual RET seek(BOX_Position position) override;
-  virtual RET tell(BOX_Position& position) override;
-  virtual RET getSize(BOX_LargeSize& size) override;
-
- private:
-  FILE* mFile;
-  BOX_Position mPosition;
-  BOX_Size mSize;
-};
+TEST(file_byte_stream_test, file_read_test) {
+  std::string path = std::string(PROJECT_DIR_PATH) + "/resource/video/video-640x360.mp4";
+  std::shared_ptr<ByteStreamReader> reader = nullptr;
+  auto ret = FileByteStreamReader::Create(reader, path);
+  if (ret == RET_OK) {
+    BOX_LargeSize size = 0;
+    reader->getSize(size);
+    GLUMES_LOG_INFO("create file read success and size is %lld", size);
+  } else {
+    GLUMES_LOG_INFO("create file read failed");
+  }
+}
 }  // namespace planet

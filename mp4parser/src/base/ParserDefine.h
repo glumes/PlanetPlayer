@@ -18,6 +18,7 @@
  */
 #pragma once
 #include <string>
+#include <vector>
 #include "base/Define.h"
 
 namespace planet {
@@ -46,4 +47,8 @@ typedef unsigned long long BOX_Position;
 #define BOX_ERROR_INTERNAL -2
 #define BOX_ERROR_EOS -3
 #define BOX_ERROR_READ_FAILED -4
+#define BOX_ERROR_INVALID_PARAMETERS -5
+
+#define BOX_LIST std::vector<std::shared_ptr<Box>>
+#define BOX std::shared_ptr<Box>
 }  // namespace planet

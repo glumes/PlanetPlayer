@@ -21,7 +21,8 @@
 
 namespace planet {
 
-FileByteStreamReader::FileByteStreamReader(const std::string& path) {
+FileByteStreamReader::FileByteStreamReader(FILE* file, BOX_LargeSize size)
+    : mFile(file), mSize(size), mPosition(0) {
 }
 
 RET FileByteStreamReader::readPartial(void* buffer, BOX_Size bytesToRead, BOX_Size& bytesRead) {
@@ -59,8 +60,19 @@ RET FileByteStreamReader::getSize(BOX_LargeSize& size) {
   return RET_OK;
 }
 
-RET FileByteStreamReader::Create(const std::string& path) {
-  return 0;
+RET FileByteStreamReader::Create(std::shared_ptr<ByteStreamReader>& reader,
+                                 const std::string& path) {
+  FILE* file = fopen(path.c_str(), "rb");
+  if (file == nullptr) {
+    return RET_FAIL;
+  }
+  BOX_Position size = 0;
+  if (BOX_fseek(file, 0, SEEK_END) >= 0) {
+    size = Box_ftell(file);
+    BOX_fseek(file, 0, SEEK_SET);
+  }
+  reader = std::make_shared<FileByteStreamReader>(file, size);
+  return RET_OK;
 }
 
 }  // namespace planet

@@ -53,6 +53,7 @@ namespace planet {
 // };
 
 typedef uint32_t FourCC;
+typedef uint32_t Type;
 
 #define FOURCC_ftyp MKTAG('f', 't', 'y', 'p')
 #define FOURCC_moov MKTAG('m', 'o', 'o', 'v')

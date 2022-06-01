@@ -16,23 +16,34 @@
  *
  * 欢迎联系交流！！！
  */
-#pragma once
-#include <iostream>
-#include "reader/ByteStreamReader.h"
+#include "mp4/box/Box.h"
 
 namespace planet {
-class FileByteStreamReader : public ByteStreamReader {
- public:
-  static RET Create(std::shared_ptr<ByteStreamReader>& reader, const std::string& path);
-  explicit FileByteStreamReader(FILE* file, BOX_LargeSize size);
-  virtual RET readPartial(void* buffer, BOX_Size bytesToRead, BOX_Size& bytesRead) override;
-  virtual RET seek(BOX_Position position) override;
-  virtual RET tell(BOX_Position& position) override;
-  virtual RET getSize(BOX_LargeSize& size) override;
+Box::Box(Type type, BOX_UI64 size)
+    : mType(type), mSize64(size), mVersion(0), mFlags(0), mParent(nullptr) {
+}
 
- private:
-  FILE* mFile;
-  BOX_Position mPosition;
-  BOX_Size mSize;
-};
+RET BoxParent::addChild(std::shared_ptr<Box> box, int position) {
+  if (box->getParent() != nullptr) {
+    return BOX_ERROR_INVALID_PARAMETERS;
+  }
+  addChildAt(box, position);
+  return 0;
+}
+
+RET BoxParent::removeChild(std::shared_ptr<Box> child) {
+  return 0;
+}
+RET BoxParent::deleteChild(Type type) {
+  return 0;
+}
+
+RET BoxParent::addChildAt(std::shared_ptr<Box> box, int position) {
+  if (position < 0) {
+    position = (int)mChildren.size();
+  }
+  mChildren.insert(mChildren.begin() + position, box);
+  return RET_OK;
+}
+
 }  // namespace planet
