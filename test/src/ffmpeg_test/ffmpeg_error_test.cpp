@@ -36,24 +36,23 @@ extern "C" {
 
 namespace planet {
     TEST(PlanetTest, ffmpeg_error_test) {
-        GLUMES_LOG_INFO("test log and arg is {} and str is {}",1,"string");
-        // 通过 av_log 打印日志
-        av_log(nullptr, AV_LOG_INFO, "this is info log\n");
-        // 设置日志打印级别
-        av_log_set_level(AV_LOG_INFO);
-        // 获取日志打印级别
-        int level = av_log_get_level();
-        av_log(nullptr, AV_LOG_INFO, "log level is %d\n", level);
+  LOG_INFO("test log and arg is {} and str is {}", 1, "string");
+  // 通过 av_log 打印日志
+  av_log(nullptr, AV_LOG_INFO, "this is info log\n");
+  // 设置日志打印级别
+  av_log_set_level(AV_LOG_INFO);
+  // 获取日志打印级别
+  int level = av_log_get_level();
+  av_log(nullptr, AV_LOG_INFO, "log level is %d\n", level);
 
-        GLUMES_LOG_INFO("ffmepg again is {}",AVERROR(EAGAIN));
+  LOG_INFO("ffmepg again is {}", AVERROR(EAGAIN));
 
-        char buf[1024];
-        av_make_error_string(buf,1024,AVERROR_EXTERNAL);
-        GLUMES_LOG_INFO("ffmpeg log info is {}",buf);
+  char buf[1024];
+  av_make_error_string(buf, 1024, AVERROR_EXTERNAL);
+  LOG_INFO("ffmpeg log info is {}", buf);
 
-        char errstr[1024];
-        av_strerror(AVERROR_DEMUXER_NOT_FOUND, errstr, 1024);
-        GLUMES_LOG_INFO("ffmpeg log info is {}",errstr);
-
-    }
+  char errstr[1024];
+  av_strerror(AVERROR_DEMUXER_NOT_FOUND, errstr, 1024);
+  LOG_INFO("ffmpeg log info is {}", errstr);
+}
 }

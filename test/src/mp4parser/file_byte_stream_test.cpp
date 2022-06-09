@@ -34,9 +34,9 @@ TEST(file_byte_stream_test, file_read_test) {
   if (ret == RET_OK) {
     BOX_LargeSize size = 0;
     reader->getSize(size);
-    GLUMES_LOG_INFO("create file read success and size is %lld", size);
+    LOG_INFO("create file read success and size is %lld", size);
   } else {
-    GLUMES_LOG_INFO("create file read failed");
+    LOG_INFO("create file read failed");
   }
 }
 }  // namespace planet

@@ -31,21 +31,21 @@ TEST(box_reader_test, test_read_ftyp) {
   auto reader = std::make_shared<BoxReader>();
   int ret = reader->open(path);
   if (ret != RET_OK) {
-    GLUMES_LOG_INFO("open file failed\n");
+    LOG_INFO("open file failed\n");
   }
 
   long length = reader->getLength();
-  GLUMES_LOG_INFO("file length is {}", length);
+  LOG_INFO("file length is {}", length);
 
   reader->setPos(0);
   auto size = reader->read32();
-  GLUMES_LOG_INFO("read size is {}", size);
+  LOG_INFO("read size is {}", size);
 
   FourCC ftyp = reader->read32();
   if (ftyp == FOURCC_ftyp) {
-    GLUMES_LOG_INFO("read ftyp success and value is {}", ftyp);
+    LOG_INFO("read ftyp success and value is {}", ftyp);
   } else {
-    GLUMES_LOG_INFO("read ftyp failed and value is {}", ftyp);
+    LOG_INFO("read ftyp failed and value is {}", ftyp);
   }
 }
 

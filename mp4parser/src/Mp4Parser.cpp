@@ -50,10 +50,10 @@ int Mp4Parser::parse(const std::string& path) {
   boxReader->read32();
   uint32_t ftyp = boxReader->read32();
   if (ftyp != FOURCC_ftyp) {
-    GLUMES_LOG_INFO("type is not ftyp");
+    LOG_INFO("type is not ftyp");
     return RET_FAIL;
   } else {
-    GLUMES_LOG_INFO("type is ftyp");
+    LOG_INFO("type is ftyp");
   }
 
   long currentSize = 0;
@@ -62,7 +62,7 @@ int Mp4Parser::parse(const std::string& path) {
     auto box = readBox(currentSize);
     currentSize += box->getSize();
     boxes.push_back(box);
-    GLUMES_LOG_INFO("boxes push back size is {} and boxes size is {}", box->size, boxes.size());
+    LOG_INFO("boxes push back size is {} and boxes size is {}", box->size, boxes.size());
     boxReader->setPos(currentSize);
   }
   return 0;
@@ -77,7 +77,7 @@ std::shared_ptr<Box> Mp4Parser::readBox(long startPos) const {
     index += 8;
     size = boxReader->read64();
   }
-  GLUMES_LOG_INFO("mp4 parser read box and size is {}", size);
+  LOG_INFO("mp4 parser read box and size is {}", size);
   auto box = allocBox(type, size);
   box->setStartPos(startPos);
   box->parse(const_cast<Mp4Parser*>(this), startPos);

@@ -19,12 +19,18 @@
 #pragma once
 #include "spdlog/spdlog.h"
 
-#define GLUMES_LOG_TRACE(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__)
-#define GLUMES_LOG_INFO(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__)
-#define GLUMES_LOG_DEBUG(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__)
-#define GLUMES_LOG_WARN(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__)
-#define GLUMES_LOG_ERROR(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__)
-#define GLUMES_LOG_CRITICAL(...) SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__)
+#define LOG_TRACE(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::trace, __VA_ARGS__)
+#define LOG_INFO(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::info, __VA_ARGS__)
+#define LOG_DEBUG(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::debug, __VA_ARGS__)
+#define LOG_WARN(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::warn, __VA_ARGS__)
+#define LOG_ERROR(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::err, __VA_ARGS__)
+#define LOG_CRITICAL(...) \
+  SPDLOG_LOGGER_CALL(Log::getCoreLogger(), spdlog::level::level_enum::critical, __VA_ARGS__)
 
 namespace planet {
 
