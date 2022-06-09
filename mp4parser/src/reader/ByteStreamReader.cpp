@@ -99,9 +99,4 @@ RET ByteStreamReader::readUI08(BOX_UI08& value) {
   value = buffer[0];
   return RET_OK;
 }
-
-// RET ByteStreamReader::readPartial(void* buffer, BOX_Size bytesToRead, BOX_Size& bytesRead) {
-//   return 0;
-// }
-
 }  // namespace planet

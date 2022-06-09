@@ -19,7 +19,14 @@
 #pragma once
 #include "FourCC.h"
 #include "base/ParserDefine.h"
+#include "reader/ByteStreamReader.h"
+
 namespace planet {
+    const BOX_UI32 BOX_HEADER_SIZE = 8;
+    const BOX_UI32 BOX_HEADER_SIZE_64 = 16;
+    const BOX_UI32 FULL_BOX_HEADER_SIZE = 12;
+    const BOX_UI32 FULL_BOX_HEADER_SIZE_64 = 20;
+
 class BoxParent;
 class Box {
  public:
@@ -73,11 +80,12 @@ class BoxParent {
     return mChildren;
   }
   virtual RET addChild(std::shared_ptr<Box> box, int position = -1);
-  virtual RET removeChild(BOX child);
+  virtual RET removeChild(std::shared_ptr<Box> box);
   virtual RET deleteChild(Type type);
 
  private:
   RET addChildAt(std::shared_ptr<Box> box, int position);
+  RET removeChildAt(int index);
 
  protected:
   std::vector<std::shared_ptr<Box>> mChildren = {};

@@ -31,9 +31,14 @@ RET BoxParent::addChild(std::shared_ptr<Box> box, int position) {
   return 0;
 }
 
-RET BoxParent::removeChild(std::shared_ptr<Box> child) {
-  return 0;
+RET BoxParent::removeChild(std::shared_ptr<Box> box) {
+  auto result = std::find(mChildren.begin(), mChildren.end(), box);
+  if (result == mChildren.end()) {
+    return RET_OK;
+  }
+  return removeChildAt(std::distance(mChildren.begin(), result));
 }
+
 RET BoxParent::deleteChild(Type type) {
   return 0;
 }
@@ -44,6 +49,13 @@ RET BoxParent::addChildAt(std::shared_ptr<Box> box, int position) {
   }
   mChildren.insert(mChildren.begin() + position, box);
   return RET_OK;
+}
+
+RET BoxParent::removeChildAt(int index) {
+  auto box = mChildren[index];
+  box->setParent(nullptr);
+  mChildren.erase(mChildren.begin() + index);
+  return 0;
 }
 
 }  // namespace planet
